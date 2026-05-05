@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: stats
+    description: Platform statistics
+  - name: peptides
+    description: Peptide operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /stats:
+    get:
+      operationId: getStats
+      tags: [stats]
+      summary: Get platform statistics
+      description: Returns real-time platform stats for the landing page
+      responses:
+        "200":
+          description: Platform stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlatformStats"
+  /peptides/evolve:
+    post:
+      operationId: evolvePeptide
+      tags: [peptides]
+      summary: Evolve a peptide sequence using AI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EvolveRequest"
+      responses:
+        "200":
+          description: Generated peptide variants
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvolveResponse"
+  /users/register:
+    post:
+      operationId: registerUser
+      tags: [stats]
+      summary: Register a wallet address as a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserRequest"
+      responses:
+        "200":
+          description: User registered or already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterUserResponse"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    PlatformStats:
+      type: object
+      properties:
+        peptidesGenerated:
+          type: integer
+        activeResearchers:
+          type: integer
+        modelsRunning:
+          type: boolean
+      required:
+        - peptidesGenerated
+        - activeResearchers
+        - modelsRunning
+    EvolveRequest:
+      type: object
+      properties:
+        seed:
+          type: string
+        creatorWallet:
+          type: string
+      required:
+        - seed
+    EvolveResponse:
+      type: object
+      properties:
+        variants:
+          type: array
+          items:
+            $ref: "#/components/schemas/PeptideVariant"
+      required:
+        - variants
+    PeptideVariant:
+      type: object
+      properties:
+        id:
+          type: string
+        sequence:
+          type: string
+        affinity:
+          type: integer
+        stability:
+          type: integer
+        novelty:
+          type: integer
+        toxicity:
+          type: integer
+        evolutionScore:
+          type: integer
+      required:
+        - id
+        - sequence
+        - affinity
+        - stability
+        - novelty
+        - toxicity
+        - evolutionScore
+    RegisterUserRequest:
+      type: object
+      properties:
+        walletAddress:
+          type: string
+      required:
+        - walletAddress
+    RegisterUserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        walletAddress:
+          type: string
+        isNew:
+          type: boolean
+      required:
+        - id
+        - walletAddress
+        - isNew
