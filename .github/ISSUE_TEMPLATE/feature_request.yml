@@ -1,0 +1,33 @@
+name: Feature Request
+description: Suggest an addition to a Peptimus shared package
+title: "[feat] "
+labels: ["enhancement", "shared"]
+assignees:
+  - peptimusdev
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Target Package
+      options:
+        - api-spec
+        - api-client-react
+        - api-zod
+        - db
+        - integrations
+        - integrations-openai-ai-server
+        - integrations-openai-ai-react
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+    validations:
+      required: true

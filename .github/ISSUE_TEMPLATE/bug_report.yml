@@ -1,0 +1,38 @@
+name: Bug Report
+description: Report a bug in a Peptimus shared package
+title: "[bug] "
+labels: ["bug", "triage", "shared"]
+assignees:
+  - peptimusdev
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Affected Package
+      options:
+        - api-spec
+        - api-client-react
+        - api-zod
+        - db
+        - integrations
+        - integrations-openai-ai-server
+        - integrations-openai-ai-react
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: What is wrong with the shared package?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: TypeScript Errors or Runtime Logs
